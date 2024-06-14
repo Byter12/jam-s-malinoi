@@ -6,6 +6,7 @@ using UnityEngine.XR;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class PlayerController : MonoBehaviour {
 
     public static PlayerController Instance { get; private set; }
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D rb;
     private Transform _transform;
+    public bool isDead = false; 
 
     private float _movementSpeed = 7.0f;
     private float minimalMovementSpeed = 0.1f;
@@ -51,6 +53,7 @@ public class PlayerController : MonoBehaviour {
         if (hp <= 0)
         {
             gameOver.SetActive(true);
+            isDead = true;
             if (Input.GetKey(KeyCode.Return))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

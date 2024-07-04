@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e1c2b68-1511-401e-a513-0543306f798c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.jam-s-malinoi/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.jam-s-malinoi/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/StartPhotoScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/StartPhotoScript.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level 1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level 1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level 3.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level 3.unity" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +119,7 @@
       <workItem from="1715437609863" duration="1839000" />
       <workItem from="1718325725785" duration="893000" />
       <workItem from="1719754103905" duration="2288000" />
-      <workItem from="1720054761867" duration="664000" />
+      <workItem from="1720054761867" duration="1395000" />
     </task>
     <servers />
   </component>

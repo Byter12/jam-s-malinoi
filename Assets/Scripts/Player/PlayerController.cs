@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour {
     public int maxHP = 20;
     public int hp;
     public HealthBar healthBar;
+    public bool isDead = false;
 
     private void Awake() {
         Instance = this;
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour {
 
         if (hp <= 0)
         {
+            isDead = true;
             gameOver.SetActive(true);
             if (Input.GetKey(KeyCode.Return))
             {
@@ -65,14 +67,19 @@ public class PlayerController : MonoBehaviour {
 }
 
     private void HandleMovement() {
-        Vector2 inputVector = GameInput.Instance.GetMovementVector();
-        rb.MovePosition(rb.position + inputVector * (_movementSpeed * Time.fixedDeltaTime));
+        if (!isDead)
+        {
+            Vector2 inputVector = GameInput.Instance.GetMovementVector();
+            rb.MovePosition(rb.position + inputVector * (_movementSpeed * Time.fixedDeltaTime));
 
-        if (Mathf.Abs(inputVector.x) > minimalMovementSpeed || Mathf.Abs(inputVector.y) > minimalMovementSpeed) {
-            isPlayerRunning = true;
-        }
-        else {
-            isPlayerRunning = false;
+            if (Mathf.Abs(inputVector.x) > minimalMovementSpeed || Mathf.Abs(inputVector.y) > minimalMovementSpeed)
+            {
+                isPlayerRunning = true;
+            }
+            else
+            {
+                isPlayerRunning = false;
+            }
         }
     }
 
@@ -127,7 +134,7 @@ public class PlayerController : MonoBehaviour {
         {
             SceneManager.LoadScene("Level 3");
         }
-        // TODO: ПЕРЕКЛЮЧЕНИЕ УРОВНЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111111
+        // TODO: ПЕРЕКЛЮЧЕНИЕ УРОВНЯ!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     }
 
 }

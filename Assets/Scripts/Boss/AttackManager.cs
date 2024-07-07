@@ -1,69 +1,68 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class AttackManager : MonoBehaviour
-{
-    [SerializeField] private BossBullet bullet;
-    private float _timer;
-    private int _attackIndex;
-    private Attacks[] _attacks = new Attacks[5];
+public class AttackManager : MonoBehaviour {
+    private Dictionary<AttackParent, float[]> AttackInfo;
+    [SerializeField] private FirstAttack _firstAttack;
+    private int currentAttackIndex = 0;
+    private float NumOfAttacks = 1;
+    private float NumOfWaves = 3;
+    private int WaveNum = 3;
+    private float remainingPatrons = 38;
+    private float timerWave = 3;
+    private float timeWave = 3;
+    private bool canWave;
+    private bool canAttack;
 
-    private float[] _timerDelaysForEachAttacks = {
-        10f, 10f, 1f
-    };
+    private float timeUnderWave = 0.5f;
+    private float timerUnderWave = 0.5f;
+    private bool canUnderWave;
 
-    private void Awake()
-    {
-        _attacks[0] = gameObject.AddComponent<Attacks>();
-        _attacks[0].SetAttacksSettings(
-            0.3f, //wavesDelay или задержка между каждой волной атаки
-            0f, // bulletDelay - задержка между выпуском каждой пули
-            0, //startAngel - стартовый угол для атаки
-            30, //deltaAngel - угол, на который происходит увеличение
-            360, //endAngel - угол, на котором заканчивается волна атаки
-            3, //waves - количество волн
-            15, //deltaWavesAngel - угол, на который сдвигается следующая волна атаки
-            bullet
-        );
-        _attacks[1] = gameObject.AddComponent<Attacks>();
-        _attacks[1].SetAttacksSettings(
-            1f, //wavesDelay или задержка между каждой волной атаки
-            0.1f, // bulletDelay - задержка между выпуском каждой пули
-            0, //startAngel - стартовый угол для атаки
-            5f, //deltaAngel - угол, на который происходит увеличение
-            360, //endAngel - угол, на котором заканчивается волна атаки
-            1, //waves - количество волн
-            15, //deltaWavesAngel - угол, на который сдвигается следующая волна атаки
-            bullet
-        );
-        _attacks[2] = gameObject.AddComponent<Attacks>();
-        _attacks[2].SetAttacksSettings(
-            0.5f, //wavesDelay или задержка между каждой волной атаки
-            0f, // bulletDelay - задержка между выпуском каждой пули
-            0, //startAngel - стартовый угол для атаки
-            90f, //deltaAngel - угол, на который происходит увеличение
-            360, //endAngel - угол, на котором заканчивается волна атаки
-            10, //waves - количество волн
-            45, //deltaWavesAngel - угол, на который сдвигается следующая волна атаки
-            bullet
-        );
-        _timer = _timerDelaysForEachAttacks[_attackIndex];
+    void Start() {
+        AttackInfo[_firstAttack] = new float[]
+            { NumOfWaves, NumOfAttacks, remainingPatrons, timerWave, timeWave, timerUnderWave, timeUnderWave };
     }
 
-    private void Start()
-    {
-        throw new NotImplementedException();
+    void Update() {
+        if (!canWave) {
+            UpdateWaveTimer();
+        }
+
+        if (!canUnderWave) {
+            UpdateUnderWaveTimer();
+        }
+
+        if (canWave && canUnderWave) {
+            _firstAttack.Attack((remainingPatrons / 13) * 15);
+            remainingPatrons--;
+            if (remainingPatrons <= 0) {
+                canWave = false;
+                remainingPatrons = 38;
+            }
+
+            if (remainingPatrons % 13 == 0) {
+                canUnderWave = false;
+                if (remainingPatrons == 0) {
+                    currentAttackIndex = UnityEngine.Random.Range(0, (int)NumOfAttacks - 1);
+                }
+            }
+        }
     }
 
-    private void Update()
-    {
-        _timer -= Time.deltaTime;
-        if (_timer < 0)
-        {
-            _timer = _timerDelaysForEachAttacks[_attackIndex];
-            _attacks[_attackIndex].StartAttack();
-            _attackIndex = Random.Range(0, 3);
+    void UpdateWaveTimer() {
+        timerWave -= Time.deltaTime;
+        if (timerWave <= 0) {
+            canWave = true;
+            timerWave = timeWave;
+        }
+    }
+
+    void UpdateUnderWaveTimer() {
+        timerUnderWave -= Time.deltaTime;
+        if (timerUnderWave <= 0) {
+            canUnderWave = true;
+            timerUnderWave = timeUnderWave;
         }
     }
 }

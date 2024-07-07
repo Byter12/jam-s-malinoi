@@ -1,34 +1,22 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class BossBehaviour : MonoBehaviour
 {
-    private int _hp = 20;
-
-    private float _timer;
-    private float _speed;
-    private float _changeDirectionCooldown = 2f;
-    private int _currentDirectionIndex = 0;
-
-    private Vector3[] _moveDirections =
+    
+    // private static BossBehaviour Instance { get; private set; }
+    
+    private int _hp = 200;
+    void Start()
     {
-        Vector3.back, Vector3.right, Vector3.forward, Vector3.left
-    };
-
-    private void Awake()
-    {
-        _timer = _changeDirectionCooldown;
+        
     }
 
-    private void Start()
+    void Update()
     {
-        transform.Translate(_moveDirections[_currentDirectionIndex] * Time.deltaTime * _speed);
-    }
-
-    private void Update()
-    {
-        _timer -= Time.deltaTime;
+        
     }
 
     public void GetDamage(int damage)
